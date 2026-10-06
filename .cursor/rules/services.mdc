@@ -1,0 +1,20 @@
+---
+description: Stricter rules for business-logic/state code in src/services/
+globs: src/services/**
+alwaysApply: false
+---
+
+# Rule — src/services/
+
+In addition to the workspace-wide instructions in `AGENTS.md`,
+everything in this folder MUST also:
+
+1. **Validate every input at the top of the method** before doing any work
+   (existence checks for IDs, range checks for numbers). Fail fast with a
+   `ValueError` — don't let a bad input propagate into a partial mutation.
+2. **Document side effects explicitly.** Every docstring must include a
+   `Side effects:` line naming exactly what state gets mutated (e.g.
+   "Side effects: marks `book` as borrowed; appends to `member.borrowed_book_ids`").
+3. **Never format output for a human.** No `print`, no f-strings meant for
+   display, no currency symbols. Return plain data (bool/list/dict/raise) —
+   formatting is `src/reports/`'s job, not this folder's.

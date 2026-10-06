@@ -1,0 +1,24 @@
+---
+description: Different rules for pure formatting code in src/reports/
+globs: src/reports/**
+alwaysApply: false
+---
+
+# Rule — src/reports/
+
+In addition to the workspace-wide instructions in `AGENTS.md`,
+everything in this folder MUST also:
+
+1. **Be pure functions.** Never mutate any argument (no calling
+   `.append()`, setting attributes, etc. on inputs). Only read from the
+   objects passed in and return a new string.
+2. **Never raise exceptions.** These functions render whatever data they're
+   given, including empty lists. If there's nothing to report, return a
+   string that says so (e.g. `"No outstanding fines."`) instead of raising.
+3. **No business logic.** Do not import from `src/services/`. If a
+   decision (e.g. "is this book overdue") is needed, it must already be a
+   property/method on the model (`src/models/`) — reports only format
+   values, they don't decide them.
+4. **Follow the existing report shape**: a title line, a `"=" * 24`
+   underline, one line per record, and (if it's a totals-style report) a
+   `"-" * 24` divider before a total line.
